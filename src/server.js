@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import helmet from 'helmet';
 import bodyParser from "body-parser";
 import {PORT} from './config/config.js';
 import {connect} from './config/dbConfig.js';
@@ -10,7 +11,10 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+app.use(helmet());
+
 app.use('/api/v1', v1ApiRoutes);
 
 app.listen(PORT, async () => {
